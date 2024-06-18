@@ -10,11 +10,44 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Post {
-  id        Int      @id @default(autoincrement())
-  name      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model Employee {
+  id           Int        @id @default(autoincrement())
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  isEnable     Boolean    @default(true)
+  avatar       String?
+  firstName    String
+  lastName     String
+  hireDate     DateTime
+  department   Department @relation(fields: [departmentId], references: [id])
+  departmentId Int
+  phone        String?
+  address      String?
+
+  // I dont' want to use some cloud service like Neon or PlanetScale for this exercise and SQLite does not support Json types, but would be my preferred solution
+  // departHistory Json?  
+  DepartmentHistory DepartmentHistory[]
+
+  @@index([firstName])
+}
+
+model Department {
+  id                Int                 @id @default(autoincrement())
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  name              String
+  Employee          Employee[]
+  DepartmentHistory DepartmentHistory[]
 
   @@index([name])
+}
+
+model DepartmentHistory {
+  id           Int        @id @default(autoincrement())
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  employee     Employee   @relation(fields: [employeeId], references: [id])
+  department   Department @relation(fields: [departmentId], references: [id])
+  employeeId   Int
+  departmentId Int
 }
