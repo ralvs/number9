@@ -18,7 +18,7 @@ const TopNav = async () => {
     <nav>
       <Container maxWidth='md' sx={sx.navContainer}>
         <Link href='/' style={{ textDecoration: 'none', color: 'inherit' }}>
-          <Typography variant='h5'>Employees</Typography>
+          <Typography variant='h5'>Number9</Typography>
         </Link>
 
         <Tooltip title='Renan Alves' placement='bottom'>
