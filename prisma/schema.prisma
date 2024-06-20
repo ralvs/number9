@@ -26,7 +26,7 @@ model Employee {
 
   // I dont' want to use some cloud service like Neon or PlanetScale for this exercise and SQLite does not support Json types, but would be my preferred solution
   // departHistory Json?  
-  DepartmentHistory DepartmentHistory[]
+  departmentHistory DepartmentHistory[]
 
   @@index([firstName])
 }
@@ -37,7 +37,7 @@ model Department {
   updatedAt         DateTime            @updatedAt
   name              String
   Employee          Employee[]
-  DepartmentHistory DepartmentHistory[]
+  departmentHistory DepartmentHistory[]
 
   @@index([name])
 }

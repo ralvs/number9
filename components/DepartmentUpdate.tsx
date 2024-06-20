@@ -1,6 +1,8 @@
 'use client'
 
 import { useState } from 'react'
+import { useFormStatus } from 'react-dom'
+import toast from 'react-hot-toast'
 
 import {
   Button,
@@ -12,14 +14,22 @@ import {
   Typography,
 } from '@mui/material'
 
+import { update } from '@/server/actions/employee'
+import Loading from './Loading'
+
 const DepartmentUpdate = ({
   list,
-  id,
+  departmentId,
+  employeeId,
   enable,
-}: { list: { id: number; name: string }[]; id: number; enable: boolean }) => {
-  const [selected, setSelected] = useState(id)
+}: { list: { id: number; name: string }[]; departmentId: number; employeeId: number; enable: boolean }) => {
+  const [selected, setSelected] = useState(departmentId)
 
   const handleChange = (event: SelectChangeEvent) => setSelected(Number(event.target.value))
+  const submit = async () => {
+    const result = await update(employeeId, { departmentId: selected })
+    toast[result.success ? 'success' : 'error'](result.msg)
+  }
 
   if (!list) return <Typography>Departments not found</Typography>
 
@@ -27,9 +37,8 @@ const DepartmentUpdate = ({
     <div>
       <Typography variant='subtitle2'>Update Department</Typography>
 
-      <Stack spacing={1} direction='row'>
-        <FormControl fullWidth size='small' disabled={!enable}>
-          {/* <InputLabel id='label-id'>Department</InputLabel> */}
+      <Stack spacing={2} direction='row'>
+        <FormControl sx={{ width: 250 }} size='small' disabled={!enable}>
           <Select value={selected.toString()} onChange={handleChange}>
             {list.map(item => (
               <MenuItem key={item.id} value={item.id}>
@@ -37,14 +46,31 @@ const DepartmentUpdate = ({
               </MenuItem>
             ))}
           </Select>
-          {/* {!!errors.guests && <FormHelperText>{errors.guests?.message}</FormHelperText>} */}
         </FormControl>
 
-        <Button variant='contained' color='primary' disabled={selected === id || !enable}>
-          Update
-        </Button>
+        <form action={submit}>
+          <SubmitButton disabled={selected === departmentId || !enable} />
+        </form>
       </Stack>
     </div>
+  )
+}
+
+// Next.js tactics to show submiting state
+// https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations
+const SubmitButton = ({ disabled }: { disabled: boolean }) => {
+  const { pending } = useFormStatus()
+
+  return (
+    <Button
+      type='submit'
+      variant='contained'
+      color='primary'
+      sx={{ width: 100 }}
+      disabled={disabled || pending}
+    >
+      {pending ? <Loading /> : 'Update'}
+    </Button>
   )
 }
 

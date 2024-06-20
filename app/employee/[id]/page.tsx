@@ -93,7 +93,12 @@ const EmployeeDetails = async ({ params: { id = '' } }: { params: { id: string }
               </List>
             </Grid>
 
-            <DepartmentUpdate list={departments} id={data.department.id} enable={data.isEnable} />
+            <DepartmentUpdate
+              list={departments}
+              departmentId={data.department.id}
+              employeeId={data.id}
+              enable={data.isEnable}
+            />
           </Stack>
         </Grid>
 

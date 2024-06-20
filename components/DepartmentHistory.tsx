@@ -27,8 +27,9 @@ const DepartmentHistory = async ({ employeeId }: { employeeId: number }) => {
         </ListItem>
 
         {history.map(entry => (
-          <ListItem disableGutters key={entry.createdAt.getTime()}>
-            <ListItemText sx={sx.column1} primary={dayjs(entry.createdAt).format('MMMM D, YYYY')} />
+          // I would utilize 'createdAt' in production
+          <ListItem disableGutters key={entry.updatedAt.getTime()}>
+            <ListItemText sx={sx.column1} primary={dayjs(entry.updatedAt).format('MMMM D, YYYY')} />
             <ListItemText sx={sx.column2} primary={`${entry.department.name}`} />
           </ListItem>
         ))}
