@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 import ClearIcon from '@mui/icons-material/Clear'
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
-import { Box, Button, Grid, IconButton, Paper, Tooltip, Typography } from '@mui/material'
+import { Badge, Box, Button, Grid, IconButton, Paper, Tooltip, Typography } from '@mui/material'
 
 import { getAll } from '@/actions/employee'
 import { calculateDuration } from '@/lib/helpers'
@@ -22,14 +22,26 @@ const Employees = async () => {
         <Paper key={employee.id} elevation={4} sx={{ p: 2 }}>
           <Grid container spacing={2}>
             <Grid item xs={2}>
-              <Image
-                priority
-                src={employee.avatar || '/dummy-image.png'}
-                alt={employee.firstName}
-                style={{ borderRadius: 20, height: '100%' }}
-                width={100}
-                height={100}
-              />
+              <Badge
+                invisible={employee.isEnable}
+                color='error'
+                badgeContent=''
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'right',
+                }}
+              >
+                <Tooltip title={employee.isEnable ? '' : 'Inactive'} placement='bottom-end'>
+                  <Image
+                    priority
+                    src={employee.avatar || '/dummy-image.png'}
+                    alt={employee.firstName}
+                    style={{ borderRadius: 20, height: '100%' }}
+                    width={100}
+                    height={100}
+                  />
+                </Tooltip>
+              </Badge>
             </Grid>
 
             <Grid item xs={8} container direction='column' justifyContent='space-between'>

@@ -35,7 +35,11 @@
       },
       "style": {
         "useImportType": "warn",
-        "useExportType": "warn"
+        "useExportType": "warn",
+        "noUnusedTemplateLiteral": {
+          "level": "warn",
+          "fix": "safe"
+        }
       }
     }
   },
