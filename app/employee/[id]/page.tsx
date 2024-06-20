@@ -5,16 +5,22 @@ import Link from 'next/link'
 import ChevronLeft from '@mui/icons-material/ChevronLeft'
 import { Box, Button, Grid, List, ListItem, ListItemText, Stack, Typography } from '@mui/material'
 
-import { getAll } from '@/actions/department'
-import { byId } from '@/actions/employee'
 import DepartmentHistory from '@/components/DepartmentHistory'
 import DepartmentUpdate from '@/components/DepartmentUpdate'
 import EmployeeToggle from '@/components/EmployeeToggle'
 import { calculateDuration } from '@/lib/helpers'
+import { getAll } from '@/server/actions/department'
+import { byId } from '@/server/actions/employee'
 
 const sx = {
   column1: { flexBasis: '10%' },
   column2: { flexBasis: '33.33%' },
+  changeDirection: {
+    display: 'flex',
+    gap: 2,
+    alignItems: 'center',
+    flexDirection: { xs: 'row', sm: 'column' },
+  },
 }
 
 const EmployeeDetails = async ({ params: { id = '' } }: { params: { id: string } }) => {
@@ -34,26 +40,25 @@ const EmployeeDetails = async ({ params: { id = '' } }: { params: { id: string }
           </Link>
         </Grid>
 
-        <Grid item xs={12} sm={4} position='relative'>
+        <Grid item xs={12} md={4} position='relative'>
           <Image
             priority
             src={data.avatar || '/dummy-image.png'}
             alt={data.firstName}
-            // style={{ borderRadius: 20, width: '100%', height: 'auto', maxWidth: 250 }}
             style={{ borderRadius: 20 }}
-            width={250}
-            height={250}
+            width={270}
+            height={270}
           />
 
           {!data.isEnable && (
             <Box
               sx={{
-                width: 250,
-                bgcolor: 'red', // Red strip background color
-                color: 'white', // Text color
-                py: 1, // Padding
+                width: 270,
+                bgcolor: 'red',
+                color: 'white',
+                py: 1,
                 position: 'absolute',
-                bottom: 0, // Position it at the bottom
+                bottom: 4,
                 textAlign: 'center',
                 borderRadius: '0 0 20px 20px',
               }}
@@ -92,8 +97,8 @@ const EmployeeDetails = async ({ params: { id = '' } }: { params: { id: string }
           </Stack>
         </Grid>
 
-        <Grid item xs={12} sm={2}>
-          <Typography>Hire Date</Typography>
+        <Grid item xs={12} sm={6} md={2} sx={sx.changeDirection}>
+          <Typography variant='subtitle1'>Hire Date:</Typography>
           <Typography>{dayjs(data.hireDate).format('MMMM D, YYYY')}</Typography>
           <Typography>{calculateDuration(data.hireDate)}</Typography>
 

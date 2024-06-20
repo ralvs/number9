@@ -1,6 +1,6 @@
 import dayjs from 'dayjs'
 
-import { departmentHistory } from '@/actions/employee'
+import { departmentHistory } from '@/server/actions/employee'
 import { List, ListItem, ListItemText, Typography } from '@mui/material'
 
 const sx = {

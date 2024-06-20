@@ -6,8 +6,8 @@ import ClearIcon from '@mui/icons-material/Clear'
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
 import { Badge, Box, Button, Grid, IconButton, Paper, Tooltip, Typography } from '@mui/material'
 
-import { getAll } from '@/actions/employee'
 import { calculateDuration } from '@/lib/helpers'
+import { getAll } from '@/server/actions/employee'
 
 const Employees = async () => {
   const data = await getAll()
