@@ -3,6 +3,7 @@
 import type { Employee } from '@prisma/client'
 import { revalidatePath } from 'next/cache'
 import { db } from 'server/db'
+import { EmployeeSchema } from '../formSchemas'
 
 export const getAll = async () => {
   return db.employee.findMany({ include: { department: { select: { name: true } } } })
@@ -27,7 +28,25 @@ export const toggle = async (id: number) => {
   revalidatePath(`/employee/${id}`)
 }
 
-export const update = async (id: number, data: Partial<Employee>) => {
+export const create = async (data: Partial<Employee>) => {
+  const valid = EmployeeSchema.safeParse(data)
+
+  if (!valid.success) {
+    return { success: false, msg: valid.error.flatten().fieldErrors }
+  }
+
+  try {
+    await db.employee.create({ data: valid.data })
+
+    revalidatePath('/employee')
+    return { success: true, msg: 'Employee created' }
+  } catch (err) {
+    console.log(`${Date()} --->>>`, err)
+    return { success: false, msg: 'Error creating employee' }
+  }
+}
+
+export const updateDepartment = async (id: number, departmentId: number) => {
   // simulate server delay
   await new Promise(resolve => setTimeout(resolve, 3000))
 
@@ -36,10 +55,10 @@ export const update = async (id: number, data: Partial<Employee>) => {
   try {
     await db.employee.update({
       where: { id },
-      data,
+      data: { departmentId },
     })
 
-    if (data.departmentId !== oldDepartment?.departmentId) {
+    if (departmentId !== oldDepartment?.departmentId) {
       await db.departmentHistory.create({
         data: {
           employee: { connect: { id } },
@@ -69,5 +88,5 @@ export const departmentHistory = async (employeeId: number) => {
 
 export const remove = async (id: number) => {
   await db.employee.delete({ where: { id } })
-  revalidatePath('/')
+  revalidatePath('/employee')
 }

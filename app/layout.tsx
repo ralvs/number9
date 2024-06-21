@@ -21,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body className={GeistSans.className}>
-        <NextTopLoader color='#D14124' />
+        <NextTopLoader color='#38b000' />
         <Toaster
           position='top-center'
           toastOptions={{

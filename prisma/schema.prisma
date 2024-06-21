@@ -46,7 +46,7 @@ model DepartmentHistory {
   id           Int        @id @default(autoincrement())
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
-  employee     Employee   @relation(fields: [employeeId], references: [id])
+  employee     Employee   @relation(fields: [employeeId], references: [id], onDelete: Cascade)
   department   Department @relation(fields: [departmentId], references: [id])
   employeeId   Int
   departmentId Int

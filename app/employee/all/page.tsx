@@ -1,22 +1,22 @@
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
+import { Badge, Box, Grid, IconButton, Paper, Tooltip, Typography } from '@mui/material'
 import dayjs from 'dayjs'
 import Image from 'next/image'
 import Link from 'next/link'
 
-import ClearIcon from '@mui/icons-material/Clear'
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
-import { Badge, Box, Button, Grid, IconButton, Paper, Tooltip, Typography } from '@mui/material'
-
+import EmployeeAdd from '@/components/EmployeeAdd'
+import EmployeeRemove from '@/components/EmployeeRemove'
 import { calculateDuration } from '@/lib/helpers'
+import { getAll as getDepartments } from '@/server/actions/department'
 import { getAll } from '@/server/actions/employee'
 
 const Employees = async () => {
   const data = await getAll()
+  const departments = await getDepartments()
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-      <Button variant='contained' color='primary' sx={{ width: 200, alignSelf: 'flex-end' }}>
-        New Employee
-      </Button>
+      <EmployeeAdd departments={departments} />
 
       {data.map(employee => (
         <Paper key={employee.id} elevation={4} sx={{ p: 2 }}>
@@ -31,7 +31,7 @@ const Employees = async () => {
                   horizontal: 'right',
                 }}
               >
-                <Tooltip title={employee.isEnable ? '' : 'Inactive'} placement='bottom-end'>
+                <Tooltip title={employee.isEnable ? '' : 'Inactive'}>
                   <Image
                     priority
                     src={employee.avatar || '/dummy-image.png'}
@@ -71,11 +71,7 @@ const Employees = async () => {
             </Grid>
 
             <Grid item xs={1} container justifyContent='center' alignItems='center'>
-              <Tooltip title='Delete'>
-                <IconButton>
-                  <ClearIcon color='error' />
-                </IconButton>
-              </Tooltip>
+              <EmployeeRemove id={employee.id} />
             </Grid>
           </Grid>
         </Paper>

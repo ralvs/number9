@@ -14,7 +14,7 @@ import {
   Typography,
 } from '@mui/material'
 
-import { update } from '@/server/actions/employee'
+import { updateDepartment } from '@/server/actions/employee'
 import Loading from './Loading'
 
 const DepartmentUpdate = ({
@@ -27,7 +27,7 @@ const DepartmentUpdate = ({
 
   const handleChange = (event: SelectChangeEvent) => setSelected(Number(event.target.value))
   const submit = async () => {
-    const result = await update(employeeId, { departmentId: selected })
+    const result = await updateDepartment(employeeId, selected)
     toast[result.success ? 'success' : 'error'](result.msg)
   }
 
