@@ -17,6 +17,9 @@ export const byId = async (id: number) => {
 }
 
 export const toggle = async (id: number) => {
+  // simulate server delay
+  await new Promise(resolve => setTimeout(resolve, 1000))
+
   const employee = await db.employee.findUnique({ where: { id } })
   if (!employee) return false
 
@@ -25,10 +28,13 @@ export const toggle = async (id: number) => {
     data: { isEnable: !employee.isEnable },
   })
 
-  revalidatePath(`/employee/${id}`)
+  revalidatePath('/employee')
 }
 
 export const create = async (data: Partial<Employee>) => {
+  // simulate server delay
+  await new Promise(resolve => setTimeout(resolve, 2000))
+
   const valid = EmployeeSchema.safeParse(data)
 
   if (!valid.success) {
@@ -87,6 +93,9 @@ export const departmentHistory = async (employeeId: number) => {
 }
 
 export const remove = async (id: number) => {
+  // simulate server delay
+  await new Promise(resolve => setTimeout(resolve, 2000))
+
   await db.employee.delete({ where: { id } })
   revalidatePath('/employee')
 }

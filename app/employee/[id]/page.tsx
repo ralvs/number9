@@ -10,7 +10,7 @@ import DepartmentUpdate from '@/components/DepartmentUpdate'
 import EmployeeToggle from '@/components/EmployeeToggle'
 import { calculateDuration } from '@/lib/helpers'
 import { getAll } from '@/server/actions/department'
-import { byId } from '@/server/actions/employee'
+import { byId, toggle } from '@/server/actions/employee'
 
 const sx = {
   column1: { flexBasis: '10%' },
@@ -27,7 +27,13 @@ const EmployeeDetails = async ({ params: { id = '' } }: { params: { id: string }
   const data = await byId(Number(id))
   const departments = await getAll()
 
-  if (!data) return <Typography>Employee not found</Typography>
+  if (!data)
+    return (
+      <>
+        <Typography>Employee not found</Typography>
+        <Link href='/employee/all'>Please, go back to the list</Link>
+      </>
+    )
 
   return (
     <>
@@ -107,7 +113,9 @@ const EmployeeDetails = async ({ params: { id = '' } }: { params: { id: string }
           <Typography>{dayjs(data.hireDate).format('MMMM D, YYYY')}</Typography>
           <Typography>{calculateDuration(data.hireDate)}</Typography>
 
-          <EmployeeToggle id={data.id} isEnable={data.isEnable} />
+          <form action={toggle.bind(null, data.id)}>
+            <EmployeeToggle isEnable={data.isEnable} />
+          </form>
         </Grid>
       </Grid>
 

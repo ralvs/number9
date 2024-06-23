@@ -8,6 +8,7 @@ import EmployeeAdd from '@/components/EmployeeAdd'
 import EmployeeRemove from '@/components/EmployeeRemove'
 import { calculateDuration } from '@/lib/helpers'
 import { getAll as getDepartments } from '@/server/actions/department'
+import { remove } from '@/server/actions/employee'
 import { getAll } from '@/server/actions/employee'
 
 const Employees = async () => {
@@ -71,7 +72,9 @@ const Employees = async () => {
             </Grid>
 
             <Grid item xs={1} container justifyContent='center' alignItems='center'>
-              <EmployeeRemove id={employee.id} />
+              <form action={remove.bind(null, employee.id)}>
+                <EmployeeRemove />
+              </form>
             </Grid>
           </Grid>
         </Paper>

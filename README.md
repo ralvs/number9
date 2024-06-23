@@ -1,29 +1,32 @@
-# Create T3 App
+# Number 9 App
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
 
-## What's next? How do I make an app with this?
+Interview project of Renan Alves.
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
-
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
-
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
+Bootstrapped with `create-t3-app` and using:
+- [Next.js v14](https://nextjs.org)
+- [React](https://react.dev)
 - [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+- [MUI](https://mui.com/material-ui)
 
-## Learn More
+## Disclaimer
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+My main goal here was to complete all the project requirements usins just Next.js 14, React Server Components and React Server Actions. Avoiding other libraries for data fetching like Tanstack Query and tRPC.<br>
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+It's a very new way of doing things, and people are still skeptical or confused about it.
+I recommend watch this video of Theo, creator of T3 Stack, as a proof that this is a good way to build.
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+https://www.youtube.com/watch?v=Angv_WIAOG8
 
-## How do I deploy this?
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+## How to test on your machine?
+
+#### *Attention: every request has a forced delay of 1 or 2 seconds to simulate a real network*
+
+Please clone this repository and run the folloing commands:
+
+`pnpm i`<br>
+`echo 'DATABASE_URL="file:./db.sqlite"' > .env`<br>
+`pnpm db:init`<br>
+`pnpm build`<br>
+`pnpm start`

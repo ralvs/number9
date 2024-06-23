@@ -1,15 +1,17 @@
-import { toggle } from '@/server/actions/employee'
-import { Button } from '@mui/material'
+'use client'
 
-const EmployeeToggle = ({ id, isEnable }: { id: number; isEnable: boolean }) => {
+import { Button } from '@mui/material'
+import { useFormStatus } from 'react-dom'
+import Loading from './Loading'
+
+const EmployeeToggle = ({ isEnable }: { isEnable: boolean }) => {
+  const { pending } = useFormStatus()
+  const content = pending ? <Loading white /> : isEnable ? 'Deactivate' : 'Activate'
+
   return (
-    <div>
-      <form action={toggle.bind(null, id)}>
-        <Button type='submit' variant='contained' color={isEnable ? 'error' : 'success'}>
-          {isEnable ? 'Deactivate' : 'Activate'}
-        </Button>
-      </form>
-    </div>
+    <Button type='submit' variant='contained' color={isEnable ? 'error' : 'success'}>
+      {content}
+    </Button>
   )
 }
 

@@ -1,15 +1,18 @@
-import { remove } from '@/server/actions/employee'
+'use client'
+
 import ClearIcon from '@mui/icons-material/Clear'
 import { IconButton, Tooltip } from '@mui/material'
+import { useFormStatus } from 'react-dom'
+import Loading from './Loading'
 
-const EmployeeRemove = ({ id }: { id: number }) => {
+const EmployeeRemove = () => {
+  const { pending } = useFormStatus()
+
   return (
     <Tooltip title='Delete'>
-      <form action={remove.bind(null, id)}>
-        <IconButton type='submit'>
-          <ClearIcon color='error' />
-        </IconButton>
-      </form>
+      <IconButton type='submit' disabled={pending}>
+        {pending ? <Loading /> : <ClearIcon color='error' />}
+      </IconButton>
     </Tooltip>
   )
 }

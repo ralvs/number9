@@ -18,16 +18,6 @@ const config = {
       },
     ],
   },
-
-  async redirects() {
-    return [
-      {
-        source: '/',
-        destination: '/employee/all',
-        permanent: true, // This makes the redirect permanent (HTTP 301)
-      },
-    ]
-  },
 }
 
 export default config
